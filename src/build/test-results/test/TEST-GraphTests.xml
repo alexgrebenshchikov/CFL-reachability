@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="GraphTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-04-09T16:45:56" hostname="LAPTOP-8N9V1NLE" time="0.942">
+  <properties/>
+  <testcase name="in and out edges test()" classname="GraphTests" time="0.001"/>
+  <testcase name="contains edge test()" classname="GraphTests" time="0.0"/>
+  <testcase name="there are no duplicating edges()" classname="GraphTests" time="0.001"/>
+  <testcase name="add many edges()" classname="GraphTests" time="0.939"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
