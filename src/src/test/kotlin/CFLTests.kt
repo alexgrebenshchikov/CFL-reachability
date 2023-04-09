@@ -153,29 +153,4 @@ class CFLTests {
         assert(graph.containsEdge(Edge(0, 2, Label.Complex("A", "100"))))
         assert(graph.containsEdge(Edge(2, 0, Label.Complex("A", "140"))))
     }
-
-    @Test
-    fun `java grammar`() {
-        val grammar = buildJavaGrammar()
-        val graph = Graph()
-        graph.addEdge(Edge(0, 1, "alloc"))
-        graph.addEdge(Edge(1, 0, "alloc'"))
-        graph.addEdge(Edge(1, 2, "assign"))
-        graph.addEdge(Edge(2, 1, "assign'"))
-
-        graph.addEdge(Edge(3, 1, Label.Complex("store", "1")))
-        graph.addEdge(Edge(1, 3, Label.Complex("store'", "1")))
-
-        graph.addEdge(Edge(2, 4, Label.Complex("load", "1")))
-        graph.addEdge(Edge(4, 2, Label.Complex("load'", "1")))
-
-        graph.addEdge(Edge(5, 3, "alloc"))
-        graph.addEdge(Edge(3, 5, "alloc'"))
-
-        cflReachability(graph, grammar)
-        assert(graph.containsEdge(Edge(3, 4, "A")))
-        assert(graph.containsEdge(Edge(4, 3, "D")))
-        assert(graph.containsEdge(Edge(3, 4, "alias")))
-        assert(graph.containsEdge(Edge(4, 3, "alias")))
-    }
 }

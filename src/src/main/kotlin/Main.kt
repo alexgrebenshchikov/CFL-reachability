@@ -43,23 +43,23 @@ fun buildJavaGrammar(): Grammar {
         addEmptyRule(Rule.Empty("A"))
         addBinaryRule(Rule.Binary("A", "assign", "A"))
         addBinaryRule(Rule.Binary(Label.Complex("C", null), Label.Simple("alias"),
-            Label.Complex("load", null)))
-        addBinaryRule(Rule.Binary(Label.Simple("B"), Label.Complex("store", null),
+            Label.Complex("store", null)))
+        addBinaryRule(Rule.Binary(Label.Simple("B"), Label.Complex("load", null),
             Label.Complex("C", null)))
         addBinaryRule(Rule.Binary("A", "B", "A"))
 
         addEmptyRule(Rule.Empty("D"))
         addBinaryRule(Rule.Binary("D", "assign'", "D"))
         addBinaryRule(Rule.Binary(Label.Complex("E", null), Label.Simple("alias"),
-            Label.Complex("store'", null)))
-        addBinaryRule(Rule.Binary(Label.Simple("F"), Label.Complex("load'", null),
+            Label.Complex("load'", null)))
+        addBinaryRule(Rule.Binary(Label.Simple("F"), Label.Complex("store'", null),
             Label.Complex("E", null)))
         addBinaryRule(Rule.Binary("D", "F", "D"))
 
-        addBinaryRule(Rule.Binary("flowsTo", "alloc", "A"))
-        addBinaryRule(Rule.Binary("flowsTo'", "D", "alloc'"))
+        addBinaryRule(Rule.Binary("pointsTo","A","alloc"))
+        addBinaryRule(Rule.Binary("flowsTo",  "alloc'", "D"))
 
-        addBinaryRule(Rule.Binary("alias", "flowsTo'", "flowsTo"))
+        addBinaryRule(Rule.Binary("alias", "pointsTo", "flowsTo"))
     }
 }
 
@@ -86,7 +86,7 @@ fun main(args: Array<String>) {
     val grammar1 = buildJavaGrammar()
 
     cflReachability(graph1, grammar1)
-    println(graph1.getAllEdges().size)
+    println(graph1.getAllEdges().filter { it.label.main == "pointsTo" }.size)
 
     val graph2 = readCppGraph("src/main/resources/Graphs_points_to/С_points_to/ls.csv")
     val grammar2 = buildCppGrammar()

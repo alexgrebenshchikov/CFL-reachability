@@ -62,30 +62,3 @@ class Grammar {
         return labelToBinaryRulesRight[labelMain] ?: setOf()
     }
 }
-
-
-fun buildJavaGrammarBBCC(): Grammar {
-    return Grammar().apply {
-        addEmptyRule(Rule.Empty("A"))
-        addBinaryRule(Rule.Binary("A", "assign", "A"))
-        addBinaryRule(Rule.Binary("A", "B", "A"))
-        addEmptyRule(Rule.Empty("D"))
-        addBinaryRule(Rule.Binary("D", "assign'", "D"))
-
-        addBinaryRule(Rule.Binary("flowsTo", "alloc", "A"))
-        addBinaryRule(Rule.Binary("flowsTo'", "D", "alloc'"))
-
-        addBinaryRule(Rule.Binary("alias", "flowsTo", "flowsTo'"))
-        addBinaryRule(Rule.Binary(Label.Complex("C", null), Label.Simple("alias"),
-            Label.Complex("load", null)))
-
-        addBinaryRule(Rule.Binary(Label.Complex("E", null), Label.Simple("alias"),
-            Label.Complex("store'", null)))
-
-        addBinaryRule(Rule.Binary(Label.Simple("B"), Label.Complex("store", null),
-            Label.Complex("C", null)))
-
-        addBinaryRule(Rule.Binary(Label.Simple("D"), Label.Complex("load'", null),
-            Label.Complex("E", null)))
-    }
-}
